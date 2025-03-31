@@ -1,5 +1,24 @@
 # welding
-Educational repository for neural network development
+This is an educational repository for neural network development. 
+
+# Introduction
+We will develop a neural network that approximates the results of welding given specific input variables. We will then use an optimization algorithm operating over inputs and outputs of the neural network to find the best settings. We will generate sample information using arbitrary functions, and the data is not necessarily reflective of actual or real data. The input variables are as follows:
+
+* electrode force
+* electrode contact surface diameter
+* squeeze time
+* weld time
+* hold time
+* weld current
+
+The output variabels are as follows:
+
+* leak rate
+* explosive force
+* leaking
+* explosion
+
+Leaking and explosion are binary categories whereas leak rate and explosive force, respectively, provide a quantitative measure of these.
 
 # Optimization
 Different possible optimization techniques are highlighted in each chapter fo 'AI Application Programming' by M. Tim Jones: simulated annealing, particle swarm optimization, adaptive resonance theory, ant algorithm, and genetic algorithms
