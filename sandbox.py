@@ -36,14 +36,17 @@ OUTPUT_COLUMNS = [
 #    return np.random.rand(length)
 
 def generate_coefficients(input_length, output_length):
-    return np.random.rand(length)
+    return np.random.rand(output_length, input_length)
 
 #def generate_row(input_length, output_length):
-def generate_row(coefficients, length):
-    input_row = np.random.rand(len(coefficients))
+def generate_row(coefficients):
+    rows, columns = coefficients.shape
+    input_row = np.random.rand(columns)
+    output = np.matmul(coefficents, input_row)
+    return output
 
 my_dataframe = pd.Dataframe(columns=COLUMNS)
-coefficients = generate_coefficients(len(INPUT_COLUMNS))
+coefficients = generate_coefficients(len(INPUT_COLUMNS), len(OUTPUT_COLUMNS))
 for i in range(TOTAL_ROWS):
     #my_dataframe.loc[len(my_dataframe)] = generate_row(len(my_dataframe.columns))
-    my_dataframe.loc[len(my_dataframe)] = generate_row(coefficients, len(OUTPUT_COLUMNS))
+    my_dataframe.loc[len(my_dataframe)] = generate_row(coefficients)
