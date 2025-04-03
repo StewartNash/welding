@@ -20,14 +20,22 @@ The output variabels are as follows:
 
 Leaking and explosion are binary categories whereas leak rate and explosive force, respectively, provide a quantitative measure of these.
 
-## Data Collection and Labeling
+## Data Generation, Collection and Labeling
 
-## Data Pre-processing
+Ordinarily, one would have to gather and label data. This is the most time-consuming and expensive part of training a neural network, because it involves utilizing human labelers and human gatherers of data.
+
+In this case, we may use various methods to generate random data. (The approach described here may be different from the approach taken in the code, as the code is being constantly updated without concurrent updates to the documentation.) The first approach was to generate a linear functional dependence of the output (b) on the the input (x) using a matrix of coefficients (A) to get Ax-b. The line 'output = np.matmul(coefficients, input_row)' in the 'generate_rows' function performs this task. The coefficient matrix is randomly populated with a normal distribution in the 'generate_coefficients' function. In essence, the neural network will have to reproduce this coefficient matrix.
+
+## Pre-processing
+
+Data preprocessing is, arguably, the most important step in machine learning. At least, it is one of the most important steps.
 
 ## Deep Learning
 
+The neural network is generated using Keras. Keras is an easy-to-use, high level deep learning API that allows one to easily construct neural networks.
+
 ## Optimization
-Different possible optimization techniques are highlighted in each chapter fo 'AI Application Programming' by M. Tim Jones: simulated annealing, particle swarm optimization, adaptive resonance theory, ant algorithm, and genetic algorithms
+Different possible optimization techniques are highlighted in each chapter of 'AI Application Programming' by M. Tim Jones: simulated annealing, particle swarm optimization, adaptive resonance theory, ant algorithm, and genetic algorithms
 
 1. History of AI
 2. Pathfinding Algorithms
