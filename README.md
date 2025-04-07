@@ -55,3 +55,15 @@ Different possible optimization techniques are highlighted in each chapter of 'A
 16. Intelligent Agents
 17. AI Today
 
+## Gradient Descent
+
+Gradient descent is an iterative algorithm that is used to minimize a function by finding the optimal parameters. To implement a gradient descent algorithm, we require the following
+- Cost function to minimize
+- Number of iterations
+- Learning rate
+    - Determine step size at each iteration
+- Partial derivatives for weight and bias
+    - Update parameters at each iteration
+- Predict function
+
+

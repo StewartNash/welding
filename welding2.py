@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
@@ -153,6 +154,11 @@ history = model.fit(
     {"regression": y_train_regression, "classification": y_train_classification},
     validation_data=(X_validation, {"regression": y_validation_regression, "classification": y_validation_classification}),
     epochs=30)
+
+pd.DataFrame(history.history).plot(figsize=(8, 5))
+plt.grid(True)
+plt.gca().set_ylim(0, 1)
+plt.show()
 
 y_predictions_regression, y_predictions_classification = model.predict(X_test)
 
