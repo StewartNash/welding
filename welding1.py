@@ -123,8 +123,8 @@ from tensorflow import keras
 
 INPUT_WIDTH = len(INPUT_COLUMNS)
 OUTPUT_WIDTH = len(OUTPUT_COLUMNS)
-numerical_output_width = X_train_labels.shape[1]
-categorical_output_width = X_train_categorical.shape[1]
+numerical_output_width = y_train.shape[1]
+categorical_output_width = y_train_classification.shape[1]
 
 model = keras.models.Sequential()
 model.add(keras.layers.InputLayer(input_shape=(INPUT_WIDTH,)))
@@ -160,13 +160,15 @@ def mean_squared_error(y_true, y_predicted):
 def gradient_descent(
     x,
     y,
+    model,
     iterations=1000,
     learning_rate=0.0001,
     stopping_threshold=1E-6):
     # Initialize weight, bias, learning rate, iterations
-    currrent_weight = 0.1
+    current_weight = 0.1
     current_bias = 0.01
     n = float(len(x))
+    current_x = x
     
     costs = []
     weights = []
@@ -174,7 +176,9 @@ def gradient_descent(
     
     # Estimate optimal parameters
     for i in range(iterations):
-        y_predicted = (current_weight * x) + current_bias
+        current_x = current_weight * x + current_bias
+        #TODO: Scaling
+        y_predicted = model.predict(current_x)
         current_cost = mean_squared_error(y, y_predicted)
         if previous_cost and abs(previous_cost - current_cost) <= stopping_threshold:
             break
@@ -185,11 +189,11 @@ def gradient_descent(
         weight_derivative = -(2 / n) * sum(x * (y - y_predicted))
         bias_derivative = -(2 / n) * sum(y - y_predicted)
         #Update weights and bias
-        current_weight = current_weigth - (learning_rate * weight_derivative)
+        current_weight = current_weight - (learning_rate * weight_derivative)
         current_bias = current_bias - (learning_rate * bias_derivative)
-        
-        print(f"Iteration {i + 1}: Cost {current_cost}, Weight \
-            {current_weight}, Bias {current_bias}")
+        if not i % 100:
+            print(f"Iteration {i + 1}: Cost {current_cost}, Weight \
+                {current_weight}, Bias {current_bias}")
     #Visualize weights and costs per iteration
     plt.figure(figsize=(8, 6))
     plt.plot(weights, costs)
@@ -199,6 +203,8 @@ def gradient_descent(
     plt.xlabel("Weight")
     plt.show()
     
-    return current_weight, current_bias
+    return current_x
 
-
+#TODO: Scale and fix function call
+#result = gradient_descent(X_test.to_numpy()[0], np.zeros_like(y_test.to_numpy()[0]), model)
+#print(result)
