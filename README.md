@@ -20,6 +20,10 @@ The output variabels are as follows:
 
 Leaking and explosion are binary categories whereas leak rate and explosive force, respectively, provide a quantitative measure of these.
 
+### Organization
+
+This repository is broken into several sections. Jupyter notebooks are available in the notebooks folder. I recommend running them in Google Colab, as that is what I used, because Jupyter notebook was not cooperative. The code found in the Jupyter notebooks is also available in Python files in the main directory. This code will be moved to its own folder at some point. I will also add a LaTeX document which reviews pertinent theory.
+
 ## Data Generation, Collection and Labeling
 
 Ordinarily, one would have to gather and label data. This is the most time-consuming and expensive part of training a neural network, because it involves utilizing human labelers and human gatherers of data.
