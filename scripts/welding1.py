@@ -153,58 +153,31 @@ model_filename = "my_model.h5"
 print("Saving " + model_filename)
 #model.save(model_filename)
 
-def mean_squared_error(y_true, y_predicted):
-    cost = np.sum((y_true - y_predicted) ** 2) / len(y_true)
-    return cost
-    
-def gradient_descent(
-    x,
-    y,
-    model,
-    iterations=1000,
-    learning_rate=0.0001,
-    stopping_threshold=1E-6):
-    # Initialize weight, bias, learning rate, iterations
-    current_weight = 0.1
-    current_bias = 0.01
-    n = float(len(x))
-    current_x = x
-    
-    costs = []
-    weights = []
-    previous_cost = None
-    
-    # Estimate optimal parameters
-    for i in range(iterations):
-        current_x = current_weight * x + current_bias
-        #TODO: Scaling
-        y_predicted = model.predict(current_x)
-        current_cost = mean_squared_error(y, y_predicted)
-        if previous_cost and abs(previous_cost - current_cost) <= stopping_threshold:
-            break
-        previous_cost = current_cost
-        costs.append(current_cost)
-        weights.append(current_weight)
-        # Calculate the gradients
-        weight_derivative = -(2 / n) * sum(x * (y - y_predicted))
-        bias_derivative = -(2 / n) * sum(y - y_predicted)
-        #Update weights and bias
-        current_weight = current_weight - (learning_rate * weight_derivative)
-        current_bias = current_bias - (learning_rate * bias_derivative)
-        if not i % 100:
-            print(f"Iteration {i + 1}: Cost {current_cost}, Weight \
-                {current_weight}, Bias {current_bias}")
-    #Visualize weights and costs per iteration
-    plt.figure(figsize=(8, 6))
-    plt.plot(weights, costs)
-    plt.scatter(weights, costs, marker='0', color='red')
-    plt.title("Cost vs. Weights")
-    plt.ylabel("Cost")
-    plt.xlabel("Weight")
-    plt.show()
-    
-    return current_x
+def f(x):
+    return model.predict(x)
 
+def newton_step(x):
+    with tf.GradientTape() as tape:
+        y = f(x)
+    J = tape.jacobian(y, x)
+    
+    JT = tf.transpose(J)
+    JTJ = tf.matmul(JT, J)
+    JTf = tf.matmul(JT, tf.expand_dims(y, axis=1))
+    delta = tf.linalg.solve(JTJ, JTf)
+    
+    return x - tf.squeeze(delta, axis=1)
+
+def gauss_newton(x, number_iterations = 20):
+    x = tf.Variable(x, dtype=tf.float32)
+    for i in range(number_iterations):
+        fx = f(x)
+        loss = tf.reduce_sum(fx**2)
+        print(f"Step {i}, x = {x.numpy()}, loss = {loss.numpy():.6f}")
+        x.assign(newton_step(x))
+        
+    return x.numpy
+                
 #TODO: Scale and fix function call
 #result = gradient_descent(X_test.to_numpy()[0], np.zeros_like(y_test.to_numpy()[0]), model)
 #print(result)
