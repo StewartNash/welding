@@ -158,15 +158,20 @@ def f(x):
 
 def newton_step(x):
     with tf.GradientTape() as tape:
-        y = f(x)
-    J = tape.jacobian(y, x)
+        tape.watch(x)
+        y = model(x)  # y: (1, output_dim)
+    J = tape.jacobian(y, x)  # J: (1, output_dim, 1, input_dim)
     
-    JT = tf.transpose(J)
-    JTJ = tf.matmul(JT, J)
-    JTf = tf.matmul(JT, tf.expand_dims(y, axis=1))
-    delta = tf.linalg.solve(JTJ, JTf)
+    # Remove batch dimensions
+    J = tf.squeeze(J, axis=[0, 2])  # Now J: (output_dim, input_dim)
+    y = tf.squeeze(y, axis=0)       # y: (output_dim,)
     
-    return x - tf.squeeze(delta, axis=1)
+    JT = tf.transpose(J)            # JT: (input_dim, output_dim)
+    JTJ = tf.matmul(JT, J)          # JTJ: (input_dim, input_dim)
+    JTf = tf.matmul(JT, tf.expand_dims(y, axis=1))  # JTf: (input_dim, 1)
+    
+    delta = tf.linalg.solve(JTJ, JTf)  # delta: (input_dim, 1)
+    return x - tf.transpose(delta)     # Make sure delta is (1, input_dim)
 
 def gauss_newton(x, number_iterations = 20):
     x = tf.Variable(x, dtype=tf.float32)
@@ -176,8 +181,11 @@ def gauss_newton(x, number_iterations = 20):
         print(f"Step {i}, x = {x.numpy()}, loss = {loss.numpy():.6f}")
         x.assign(newton_step(x))
         
-    return x.numpy
+    return x.numpy()
+
+x = gauss_newton(X_test[:1])
                 
-#TODO: Scale and fix function call
-#result = gradient_descent(X_test.to_numpy()[0], np.zeros_like(y_test.to_numpy()[0]), model)
-#print(result)
+x = gauss_newton(X_test[:1])
+x = scaler.inverse_transform(x)
+x = x.flatten().tolist()
+print(x)
