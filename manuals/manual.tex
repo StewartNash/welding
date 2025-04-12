@@ -15,5 +15,27 @@
 
 \section{Introduction}
   Artificial neural networks can be used to model the performance of welding when trained on the results of welding.
+  
+\section{Optimization}
+
+\subsection{Gradient Descent}
+
+\subsection{Newton-Raphson Method}
+
+The Newton-Raphson method is an iterative method for finding the roots of a differentiable function $f$, which are solutions to the equation $f(x)=0$.
+
+For a univariate function we have the Taylor expansion
+\begin{equation}
+	f(x)=\sum_{k=0}^\infty{\frac{D_x^kf(x_0)}{k!}(x-x_0)^k}
+\end{equation}
+We take the second-order approximation around $x_0$
+\begin{equation}
+	f(x)=f(x_0)+f'(x_0)(x-x_0)+\frac{1}{2}(x-x_0)f''(x-x_0)
+\end{equation}
+
+\subsection{Gauss-Newton Method}
+
+The Gauss-Newton algorithm is an extension of Newton's method of optimization. It is used to solve non-linear least squares problems, which is equivalent to minimizing a sum of squared function values.
+
 
 \end{document}
