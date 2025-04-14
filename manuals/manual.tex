@@ -18,7 +18,7 @@
   
 \section{Optimization}
 
-\subsection{Gradient Descent}
+Multivariate functions have multiple independent variables and a single dependent variable, while vector-valued functions have a single independent variable and a vector-valued output. 
 
 \subsection{Newton-Raphson Method}
 
@@ -33,9 +33,27 @@ We take the second-order approximation around $x_0$
 	f(x)=f(x_0)+f'(x_0)(x-x_0)+\frac{1}{2}(x-x_0)f''(x-x_0)
 \end{equation}
 
+\subsection{Gradient Descent}
+
+Gradient descent is a method for unconstrained mathematical optimization. It is a first-order iterative algorithm for minimizing a differentiable multivariate function.
+
 \subsection{Gauss-Newton Method}
 
 The Gauss-Newton algorithm is an extension of Newton's method of optimization. It is used to solve non-linear least squares problems, which is equivalent to minimizing a sum of squared function values.
+
+Given $m$ functions $\mathbb{r}=(r_1,\ldots,r_m)$, often called residuals, of $n$ variables $\mathbb{\beta}=(\beta_1,\ldots,\beta_n)$, with $m\geq{n}$, the Gauss-Newton algorithm iteratively finds the value of $\beta$ that minimize the sum of squares
+\begin{equation}
+	S(\mathbb{\beta})=\sum_{i=1}^m{r_i(\mathbb{\beta})^2}\,.
+\end{equation}
+Starting with an initial guess $\mathbb{\beta}^{(0)}$ for the minimum, the method proceeds by the iterations
+\begin{equation}
+	\mathbb{\beta}^{s+1}=\mathbb{\beta}^{(s)}-({\mathbb{J}_\mathbb{r}}^T\mathbb{J}_\mathbb{r})^{-1}{\mathbb{J}_\mathbb{r}}^T\mathbb{r}\left(\mathbb{\beta}^{(s)}\right)\,,
+\end{equation}
+where, if $\mathbb{r}$ and $\mathbb{\beta}$ are column vectors, the entries of the Jacobian matrix are
+\begin{equation}
+	(\mathbb{J}_\mathbb{r})_{ij}=\frac{\partial{r_i}\left(\mathbb{\beta}^{(s)}\right)}{\partial\beta_j}\,,
+\end{equation}
+and the symbol $\.^T$ denotes the matrix transpose.
 
 
 \end{document}

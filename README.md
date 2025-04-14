@@ -59,6 +59,10 @@ Different possible optimization techniques are highlighted in each chapter of 'A
 16. Intelligent Agents
 17. AI Today
 
+### Newton-Raphson Method
+
+Newton's method or the Newton-Raphson method is an iterative method for finding the roots of a differentiable function.
+
 ### Gradient Descent
 
 Gradient descent is an iterative algorithm that is used to minimize a function by finding the optimal parameters. To implement a gradient descent algorithm, we require the following
@@ -70,10 +74,8 @@ Gradient descent is an iterative algorithm that is used to minimize a function b
     - Update parameters at each iteration
 - Predict function
 
-### Newton-Raphson Method
-
-Newton's method or the Newton-Raphson method is an iterative method for finding the roots of a differentiable function.
-
 ### Gauss-Newton Method
 
 The Gauss-Newton algorithm is an extension of Newton's method. It is used to solve non-linear least squares problems, which is equivalent to minimizing a sum of squared function values.
+
+The Gauss-Newton method is used in welding1.py to minimize the leakage rate and explosive force. The neural network serves as the functional model which relates the input parameters to the output parameters - leakage and explosion.
