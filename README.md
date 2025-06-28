@@ -38,6 +38,33 @@ Data preprocessing is, arguably, the most important step in machine learning. At
 
 The neural network is generated using Keras. Keras is an easy-to-use, high level deep learning API that allows one to easily construct neural networks.
 
+### Iris dataset
+
+The Iris dataset is a classic, widely used dataset in the fields of statistics, machine learning, and pattern recognition. The dataset was introduced by the British statistician and biologist Ronald A. Fisher in 1936 in his paper,"The use of multiple measurements in taxonomic problems." Fisher used the dataset to demonstrate a linear discriminant analysis (LDA) technique, which is a method used to find a linear combination of features that separates two or more classes of objects.
+
+The Iris dataset consists of 150 samples of iris flowers, divided equally among three species:
+
+* Iris setosa
+* Iris versicolor
+* Iris virginica
+
+Each sample has four numerical features measured in centimeters:
+
+* sepal length
+* sepal width
+* petal length
+* petal width
+
+The target variable is the species of the iris flower.
+
+The iris dataset provides an excellent platform for demonstrating classification algorithms, dimensionality reduction, and data visualization techniques. It is frequenctly used to demonstrate the following machine learning techniques:
+ 
+ * K-nearest neighbors (KNN)
+ * Support vector machines (SVM)
+ * Logistic regression
+ * Neural networks
+ * Decision trees
+
 ## Optimization
 Different possible optimization techniques are highlighted in each chapter of 'AI Application Programming' by M. Tim Jones: simulated annealing, particle swarm optimization, adaptive resonance theory, ant algorithm, and genetic algorithms
 
