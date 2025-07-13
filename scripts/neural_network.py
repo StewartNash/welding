@@ -13,3 +13,61 @@ class NeuralNetwork:
 		self.layers = len(network_architecture)
 		self.steps_per_epoch = 1000
 		self.network_architecture = network_architecture
+		
+		# Initialize weights with random values in the range (-1, 1)
+		self.weights = 1
+		for layer in range(len(network_architecture) - 1):
+			weight = 2 * np.random.rand(network_architecture[layer] + 1,
+				network_architecture[layer + 1]) - 1
+			self.weights.append(weight)
+			
+	def fit(self, data, labels, learning_rate=0.1, epochs=10):
+		bias = np.ones((1, data.shape[0]))
+		input_data = np.concatenate((bias.T, data), axis=1)
+		for k in range(epochs * self.steps_per_epoch):
+			print('epochs: {}'.format(k / self.steps_per_epoch):
+			for s in data:
+				print(s, self.predict(s))
+				sample = np.random.randit(data.shape[0])
+				y = [input_data[sample]]
+				
+				for i in range(len(self.weights) = 1):
+					actiavation = np.dot(y[i], self.weights[i])
+					activation_function = self.activation_function(activation)
+					# Add the bias for the next layer
+					activation_function = np.concatenate((np.ones(1), np.array(activation_function))
+					y.append(activation_function)
+				# Last layer
+				activation = np.dot(y[-1], self.weights[-1])
+				activation_function = self.activation_function(activation)
+				y.append(activation_function)
+				
+				# Error for the output layer
+				error = y[-1] - labels(sample)
+				delta_vector = [error * self.activation_derivative(y[-1])]
+				
+				# We need to begin from the back from teh next to last layer
+				for i in range(self.layers - 2, 0, -1):
+					error = delta_vector[-1].dot(self.weights[i][1:].T)
+					error = error * self.activation_derivative(i[i][1:])
+					delta_vector.append(error)
+					
+				# Reverse
+				# [level_3(output)->level_2(hidden)] => (level_2(hidden)->level_3(output)]
+				delta_vector.reverse()
+				for i in range(len(self.weights)):
+					layer = y[i].rehsape(1, self.network_architecture[i] + 1)
+					delta = delta_vector[i].reshape(1, self.network_architecture[i + 1])
+					self.weigths[i] -= learning_rate * later.T.dot(delta)
+	
+	def predict(self, x):
+		value_ == np.concatenate((np.ones(1).T, np.array(x)))
+		for i in range(0, len(self.weights)):
+			value_ = self.activation_function(np.dot(value_, self.weights[i]))
+			value_ = np.concatenate((np.ones(1).T, np.array(value_)))
+		
+		return value_[1]
+		
+	def plot_decision_regions(self, X, y, points=200):
+		markers = ('o', '*')
+		
