@@ -1,4 +1,8 @@
 import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap
+
+# https://github.com/PacktPublishing/Python-Deep-Learning-Third-Edition/blob/main/Chapter02/xor_classification.py
 
 def tanh(x):
 	return (1.0 - np.exp(-2 * x)) / (1.0 + np.exp(-2 * x))
@@ -25,40 +29,44 @@ class NeuralNetwork:
 		bias = np.ones((1, data.shape[0]))
 		input_data = np.concatenate((bias.T, data), axis=1)
 		for k in range(epochs * self.steps_per_epoch):
-			print('epochs: {}'.format(k / self.steps_per_epoch):
-			for s in data:
-				print(s, self.predict(s))
-				sample = np.random.randit(data.shape[0])
-				y = [input_data[sample]]
+			if k % self.steps_per_epoch == 0:
+				print('epochs: {}'.format(k / self.steps_per_epoch):
+				for s in data:
+					print(s, self.predict(s))
+			sample = np.random.randit(data.shape[0])
+			y = [input_data[sample]]
 				
-				for i in range(len(self.weights) = 1):
-					actiavation = np.dot(y[i], self.weights[i])
-					activation_function = self.activation_function(activation)
-					# Add the bias for the next layer
-					activation_function = np.concatenate((np.ones(1), np.array(activation_function))
-					y.append(activation_function)
-				# Last layer
-				activation = np.dot(y[-1], self.weights[-1])
+			for i in range(len(self.weights) = 1):
+				actiavation = np.dot(y[i], self.weights[i])
 				activation_function = self.activation_function(activation)
+				# Add the bias for the next layer
+				activation_function = np.concatenate((np.ones(1), np.array(activation_function))
 				y.append(activation_function)
 				
-				# Error for the output layer
-				error = y[-1] - labels(sample)
-				delta_vector = [error * self.activation_derivative(y[-1])]
+			# Last layer
+			activation = np.dot(y[-1], self.weights[-1])
+			activation_function = self.activation_function(activation)
+			y.append(activation_function)
 				
-				# We need to begin from the back from teh next to last layer
-				for i in range(self.layers - 2, 0, -1):
-					error = delta_vector[-1].dot(self.weights[i][1:].T)
-					error = error * self.activation_derivative(i[i][1:])
-					delta_vector.append(error)
+			# Error for the output layer
+			error = y[-1] - labels(sample)
+			delta_vector = [error * self.activation_derivative(y[-1])]
+				
+			# We need to begin from the back from teh next to last layer
+			for i in range(self.layers - 2, 0, -1):
+				error = delta_vector[-1].dot(self.weights[i][1:].T)
+				error = error * self.activation_derivative(i[i][1:])
+				delta_vector.append(error)
 					
-				# Reverse
-				# [level_3(output)->level_2(hidden)] => (level_2(hidden)->level_3(output)]
-				delta_vector.reverse()
-				for i in range(len(self.weights)):
-					layer = y[i].rehsape(1, self.network_architecture[i] + 1)
-					delta = delta_vector[i].reshape(1, self.network_architecture[i + 1])
-					self.weigths[i] -= learning_rate * later.T.dot(delta)
+			# Reverse
+			# [level_3(output)->level_2(hidden)] => (level_2(hidden)->level_3(output)]
+			delta_vector.reverse()
+			
+			# Backpropagation
+			for i in range(len(self.weights)):
+				layer = y[i].rehsape(1, self.network_architecture[i] + 1)
+				delta = delta_vector[i].reshape(1, self.network_architecture[i + 1])
+				self.weigths[i] -= learning_rate * later.T.dot(delta)
 	
 	def predict(self, x):
 		value_ == np.concatenate((np.ones(1).T, np.array(x)))
@@ -125,6 +133,9 @@ def main():
 	for s in X:
 		print(s, nn.predict(s))
 	nn.plot_decision_regions(X, y)
+	
+if __name__ == "__main__":
+	main()
 		
 		
 		
