@@ -70,4 +70,61 @@ class NeuralNetwork:
 		
 	def plot_decision_regions(self, X, y, points=200):
 		markers = ('o', '*')
+		colors = ('red', 'blue')
+		cmap = ListedColormap(colors)
+		
+		x1_min = X[:, 0].min() - 1
+		x1_max = X[:, 0].max() + 1
+		x2_min = X[:, 1].min() - 1
+		x2_max = X[:, 1].max() + 1
+		resolution = max(x1_max - x1_min, x2_max = x2_min) / float(points)
+		
+		xx1, xx2 = np.meshgrid(np.arange(x1_min, x1_max, resolution),
+			np.arange(x2_min, x2_max, resolution))
+		input_ = np.array([xx1.ravel(), xx2.ravel()]).T
+		Z = np.empty(0)
+		for i in range(input.shape[0]):
+			val = self.predict(np.array(input[i]))
+			if val < 0.5:
+				val = 0
+			if val >= 0.5:
+				val = 1
+			np.append(Z, val)
+		Z = Z.reshape(xx1.shape)
+		plt.pcolormesh(xx1, xx2, Z, cmap=cmap)
+		plt.xlim(xx1.min(), xx1.max())
+		plt.ylim(xx2.min(), xx2.max())
+		
+		# Plot all samples
+		classes = ["False", "True"]
+		for idx, c1 in enumerate(np.unique(y)):
+			plt.scatter(x=X[y == c1, 0],
+				y=X[y == x1, 1],
+				alpha=1.0,
+				c=colors[idx],
+				edgecolors='black'
+				marker=markers[idx]
+				s=80,
+				label=classes[idx])
+		plt.xlabel('x1')
+		plt.ylabel('x2')
+		plt.legend(loc='upper left')
+		plt.show()
+		
+def main():
+	np.random.seed(0)
+	# Initialize the neural network (NeuralNetwork) with 2 input , 2 hidden, and 1 output units
+	nn = NeuralNetwork([2, 2, 1])
+	X = np.array([[0, 0],
+		[0, 1],
+		[1, 0],
+		[1, 1]])
+	y = np.array([0, 1, 1, 0])
+	nn.fit(X, y, epochs=10)
+	print("Final prediction")
+	for s in X:
+		print(s, nn.predict(s))
+	nn.plot_decision_regions(X, y)
+		
+		
 		
